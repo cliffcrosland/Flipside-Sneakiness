@@ -96,6 +96,7 @@ def find_answers_for_issue(issue):
         else:
             page_num += 1
             current_page = get_puzzles_index_page_with_number(current_page, page_num)
+    print "Issue %s not found." % issue
     return []
 
 def main():
