@@ -1,4 +1,4 @@
-import urllib, re
+import urllib, re, string
 
 pages_cache = {}
 
@@ -36,7 +36,10 @@ def get_the_shift(puzzles_page):
 def get_formatted_answers(puzzles_page):
     match = re.search(r'formattedAnswers = new Array\((.+)\)', puzzles_page)
     answers = match.group(1)
-    return answers.split(", ")
+    # Trim off the first and last quotation marks. The rest will be removed
+    # during the split()
+    answers = answers[1:-1]
+    return answers.split('", "')
 
 def get_shifted_answers(the_shift, formatted_answers):
     shifted_answers = []
@@ -49,7 +52,7 @@ def get_shifted_answers(the_shift, formatted_answers):
         else:
             shifted_answer = ""
             for ch in answer:
-                if ch == '"' or ch == " " or ch == "*":
+                if not (ch in string.ascii_letters):
                     shifted_answer += ch
                 else:
                     shifted_ch = (ord(ch) - int(the_shift))
@@ -115,7 +118,7 @@ def main():
       answers = find_answers_for_issue(issue)
       print ""
       for answer in answers:
-          print answer[1:-1] # remove surrounding quotes
+          print answer
       print ""
 
 main()
