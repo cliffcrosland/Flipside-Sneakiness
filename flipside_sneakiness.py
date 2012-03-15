@@ -96,7 +96,7 @@ def find_answers_for_issue(issue):
     return []
 
 def main():
-    oldest_issue_num = 35
+    oldest_issue_num = 1
     latest_issue_num = int(get_latest_issue_number())
     print "Get answers to the Stanford Flipside puzzles!"
     print ""
@@ -105,6 +105,8 @@ def main():
       print "Answers available for issues %d through %d." % (oldest_issue_num, latest_issue_num)
       print "(Press Enter to exit)"
       issue = raw_input("Issue #: ")
+      if len(issue) == 1:
+          issue = "0" + issue # Add leading 0
       if len(issue) == 0:
           break
       if int(issue) < oldest_issue_num or int(issue) > latest_issue_num:
